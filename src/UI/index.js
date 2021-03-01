@@ -1,5 +1,7 @@
-const saludo = 'Hello world!';
-console.log(saludo);
+function getPokemons(){
+    return fetch('https://pokeapi.co/api/v2/pokemon')
+    .then(oldata => oldata.json)
+    .then(data => console.log(data));
+}
 
-const saludo2 = 'Hello world two!';
-console.log(saludo2);
+console.log("hello world");
