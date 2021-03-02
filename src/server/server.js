@@ -1,10 +1,12 @@
 import express from "express";
 import routes from "./routes";
+import path from 'path';
 
 const app = express();
 const port = 2021;
 
 // Middleware
+app.use(express.static('dist'));
 
 // Routes
 app.use(routes);

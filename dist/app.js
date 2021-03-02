@@ -15,7 +15,7 @@
   \*************************/
 /***/ (() => {
 
-eval("function getPokemons() {\n  return fetch('https://pokeapi.co/api/v2/pokemon').then(function (oldata) {\n    return oldata.json;\n  }).then(function (data) {\n    return console.log(data);\n  });\n}\n\nconsole.log(\"hello world\");\n\n//# sourceURL=webpack://try/./src/UI/index.js?");
+eval("console.log('hello world');\nconsole.log('hello world 2');\nconsole.log('Hello world 3');\n\n//# sourceURL=webpack://try/./src/UI/index.js?");
 
 /***/ })
 
