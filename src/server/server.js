@@ -7,6 +7,7 @@ const port = 2021;
 
 // Middleware
 app.use(express.static('dist'));
+app.set('views', path.join(__dirname + '/views'))
 
 // Routes
 app.use(routes);
