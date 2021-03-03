@@ -4,7 +4,7 @@ import path from 'path';
 const router = express.Router();
 
 // Client
-router.get('/', (req, res) => {
+router.get('/home', (req, res) => {
     res.sendFile(path.resolve('C:/Users/mofrc/OneDrive/Escritorio/Udemy/node/try' + '/dist/index.html'));
 });
 
