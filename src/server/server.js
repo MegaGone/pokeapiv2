@@ -1,16 +1,19 @@
 import express from "express";
 import routes from "./routes";
 import path from 'path';
+import bodyParser from 'body-parser';
 
 const app = express();
 const port = 2021;
 
 // Middleware
 app.use(express.static('dist'));
-app.set('views', path.join(__dirname + '/views'))
 
 // Routes
 app.use(routes);
+
+// Bodyparser
+app.use(bodyParser.json());
 
 // CORS
 app.use((req, res, next) => {

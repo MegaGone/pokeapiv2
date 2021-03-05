@@ -1,47 +1,59 @@
-console.log("hello world");
+if (window.location.href.indexOf("home") > -1) {
+  console.log("hello world");
 
-/*************  HOME PAGE *************/ 
+  /*************  HOME PAGE *************/
 
-// pokemon and slot in the UI
-function getPokemon(pokemon, num) {
-  fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`).then((res) => {
-    res.json().then((pokemon) => {
-      printPokemon(pokemon, num) // Print pokemon in the HTML
+  // pokemon and slot in the UI
+  function getPokemon(pokemon, num) {
+    fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`).then((res) => {
+      res.json().then((pokemon) => {
+        printPokemon(pokemon, num); // Print pokemon in the HTML
+      });
     });
-  });
-}
+  }
 
-// Get random pokemon data 
-function getPokemons() {
-  let firstPokemon = Math.round(Math.random() * 150);
-  let secondPokemon = Math.round(Math.random() * 150);
-  let thirdPokemon = Math.round(Math.random() * 150);
-  let fourthPokemon = Math.round(Math.random() * 150);
-  let fifthPokemon = Math.round(Math.random() * 150);
+  // Get random pokemon data
+  function getPokemons() {
+    let firstPokemon = Math.round(Math.random() * 150);
+    let secondPokemon = Math.round(Math.random() * 150);
+    let thirdPokemon = Math.round(Math.random() * 150);
+    let fourthPokemon = Math.round(Math.random() * 150);
+    let fifthPokemon = Math.round(Math.random() * 150);
 
-  getPokemon(firstPokemon, 1);
-  getPokemon(secondPokemon, 2);
-  getPokemon(thirdPokemon, 3);
-  getPokemon(fourthPokemon, 4);
-  getPokemon(fifthPokemon, 5);
-}
+    getPokemon(firstPokemon, 1);
+    getPokemon(secondPokemon, 2);
+    getPokemon(thirdPokemon, 3);
+    getPokemon(fourthPokemon, 4);
+    getPokemon(fifthPokemon, 5);
+  }
 
-getPokemons();
+  getPokemons();
 
-// Get pokemon list
-let lists = document.getElementById("lists");
+  // Get pokemon list
+  let lists = document.getElementById("lists");
 
-
-// data in HTML
-function printPokemon(pokemon, num){
+  // data in HTML
+  function printPokemon(pokemon, num) {
     let item = lists.querySelector(`#pokemon-${num}`);
 
     // Set the image with img of the API raw
-    let image = item.getElementsByTagName('img')[0]
-    image.setAttribute('src', pokemon.sprites.front_default)
+    let image = item.getElementsByTagName("img")[0];
+    image.setAttribute("src", pokemon.sprites.front_default);
 
-    let name = item.getElementsByTagName('h5')[0]
+    let name = item.getElementsByTagName("h5")[0];
     name.textContent = pokemon.name;
+  }
 }
 
-/*************  SEARCH PAGE *************/ 
+/*************  SEARCH PAGE *************/
+if(window.location.href.indexOf('pokemon') > -1){
+  alert('pokemon');
+
+  const button = document.getElementById('search');
+
+  button.addEventListener('click', () => {
+    const data = document.getElementById('data').value;
+    console.log(data);
+  });
+
+}
