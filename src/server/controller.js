@@ -5,41 +5,30 @@ exports.prueba = function (req, res) {
 };
 
 exports.getPokemons = function (req, res) {
-  let getPokemon = (pokemon) => {
-    fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
-      .then((rawData) => rawData.json())
-      .then((data) => {
-        res.send(data);
-      });
-  };
-
-  let pokemons = () => {
-    let firstPokemon = Math.random(Math.round() * 150);
-    let secondPokemon = Math.round(Math.random() * 150);
-    let thirdPokemon = Math.round(Math.random() * 150);
-    let fourthPokemon = Math.round(Math.random() * 150);
-    let fifthPokemon = Math.round(Math.random() * 150);
-
-    getPokemon(firstPokemon);
-    getPokemon(secondPokemon);
-    getPokemon(thirdPokemon);
-    getPokemon(fourthPokemon);
-    getPokemon(fifthPokemon);
-  };
-
-  pokemons();
-};
-
-exports.pruebaPokemons = function (req, res) {
-
   // Coleccion para los pokemones
   let pokemones = [];
 
   // Para que se ejecute 5 veces
   for (let i = 0; i <= 5; i++) {
-    let number = Math.random(Math.round() * 150);
-    pokemones.push( number );
+    // Obtener numeros aletorios para el fetch
+    let x = Math.random(); // Obtengo numero alazar entre 0 y 1
+    x = x * 150; // Valor maximo por el que quiero que se multiplique
+    x = Math.floor(x); // Redondeo inferiormente para quedarme nada mas con la parte entera.
+
+    let url = `https://pokeapi.co/api/v2/pokemon/${x}`; // Fetch para cada pokemon (distinto)
+    pokemones.push(url); // Agrego al array
   }
 
-  res.send(pokemones);
+  // Por cada pokemon debo de hacer un fetch
+  Promise.all(
+    pokemones.map((url) =>
+      fetch(url)
+      .then((response) => response.json())
+      
+
+    )).then((pokemons) => { // Respuesta de todas las promesas
+    res.json({ data: pokemons });
+  });
+
+  // Solo queda mapear la data
 };

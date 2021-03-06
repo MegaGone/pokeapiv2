@@ -63,13 +63,12 @@ router.get("/api/pokemon/:poke", (req, res) => {
         image: data.sprites.front_default,
       };
 
-      res.json(newData);
+      res.json({data: newData});
     });
 });
-router.get('/api/pokemons', controller.getPokemons)
 
 // Prueba
-router.get('/try', controller.pruebaPokemons)
+router.get('/api/pokemons', controller.getPokemons)
 
 
 module.exports = router;
