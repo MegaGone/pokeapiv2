@@ -3,12 +3,18 @@ import pokemonServices from "./controller"
 
 const router = express.Router();
 
+// Pagina de inicio
+
+router.get("/", pokemonServices.homePage)
+
+router.get("/api", pokemonServices.homePage)
+
+router.get("/api/pokemon", pokemonServices.homePage)
+
 // Pokemon por URL
 router.get("/api/pokemon/:id", pokemonServices.getPokemon);
 
-// Prueba
+// 50 pokemones
 router.get('/api/pokemons', pokemonServices.getPokemons)
-
-
 
 module.exports = router;

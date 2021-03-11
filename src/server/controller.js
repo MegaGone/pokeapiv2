@@ -57,8 +57,28 @@ const getPokemon = (req, res) => {
     });
 }
 
+const homePage = (req, res) => {
+
+  let id = Math.random();
+  id = id * 500;
+  id = Math.floor(id);
+
+  fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
+  .then((rawData) => rawData.json())
+  .then((data) => {
+    let newData = {
+      id: data.id,
+      name: data.name,
+      image: data.sprites.front_default,
+    };
+
+    res.render('home', {title: newData.name, imagen: newData.image, id: newData.id})
+  });
+}
+
 // module ES6
 export default {
   getPokemons,
-  getPokemon
+  getPokemon,
+  homePage
 };

@@ -11,7 +11,7 @@ app.set('views', path.join(__dirname + '/views'))
 app.set('view engine', 'ejs')
 
 // Middleware esto es para que el server tenga acceso a esto
-app.use(express.static('dist'));
+
 
 // Routes
 app.use(routes);
@@ -33,6 +33,5 @@ app.use((req, res, next) => {
 
 // Server
 app.listen(port, () => {
-  console.log(path.join(__dirname + '/views'));
   console.log(`Server listen on http://localhost:${port}`);
 });
