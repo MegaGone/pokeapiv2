@@ -6,11 +6,11 @@ import fetch from "node-fetch";
   let urls = [];
 
   // Para que se ejecute 5 veces
-  for (let i = 0; i <= 5; i++) {
+  for (let i = 0; i <= 50; i++) {
     // Obtener numeros aletorios para el fetch
 
     let x = Math.random(); // Obtengo numero alazar entre 0 y 1
-    x = x * 150; // Valor maximo por el que quiero que se multiplique
+    x = x * 500; // Valor maximo por el que quiero que se multiplique
     x = Math.floor(x); // Redondeo inferiormente para quedarme nada mas con la parte entera.
 
     let url = `https://pokeapi.co/api/v2/pokemon/${x}`; // Fetch para cada pokemon (distinto)
@@ -53,18 +53,12 @@ const getPokemon = (req, res) => {
         image: data.sprites.front_default,
       };
 
-      res.json({data: newData});
+      res.render('pokemon', {title: newData.name, imagen: newData.image, id: newData.id})
     });
 }
-
-// node module
-//module.exports = getPokemons;
 
 // module ES6
 export default {
   getPokemons,
   getPokemon
 };
-/*
-retornar 50 pokemones
-*/
