@@ -1,7 +1,6 @@
 import fetch from "node-fetch";
 
-
- const getPokemons = function (req, res) {
+const getPokemons = function (req, res) {
   // Coleccion para los pokemones
   let urls = [];
 
@@ -19,29 +18,23 @@ import fetch from "node-fetch";
 
   // Por cada pokemon debo de hacer un fetch
   Promise.all(
-    urls.map((url) =>
-      fetch(url)
-      .then((response) => response.json())
-    
-    )).then((pokemons) => { // Respuesta de todas las promesas
+    urls.map((url) => fetch(url).then((response) => response.json()))
+  ).then((pokemons) => {
+    // Respuesta de todas las promesas
 
-      let mapData = [];
+    let mapData = [];
 
-      pokemons.forEach( pokemon  => {
-
-        mapData.push({
-          id: pokemon.id,
-          name: pokemon.name,
-          image: pokemon.sprites.front_default
-        })
-
+    pokemons.forEach((pokemon) => {
+      mapData.push({
+        id: pokemon.id,
+        name: pokemon.name,
+        image: pokemon.sprites.front_default,
       });
+    });
 
-      res.json({data: mapData});
+    res.render('pokemons', { mapData })
   });
 };
-
-
 
 const getPokemon = (req, res) => {
   fetch(`https://pokeapi.co/api/v2/pokemon/${req.params.id}`)
@@ -53,28 +46,35 @@ const getPokemon = (req, res) => {
         image: data.sprites.front_default,
       };
 
-      res.render('pokemon', {title: newData.name, imagen: newData.image, id: newData.id})
+      res.render("pokemon", {
+        title: newData.name,
+        imagen: newData.image,
+        id: newData.id,
+      });
     });
-}
+};
 
 const homePage = (req, res) => {
-
   let id = Math.random();
   id = id * 500;
   id = Math.floor(id);
 
   fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
-  .then((rawData) => rawData.json())
-  .then((data) => {
-    let newData = {
-      id: data.id,
-      name: data.name,
-      image: data.sprites.front_default,
-    };
+    .then((rawData) => rawData.json())
+    .then((data) => {
+      let newData = {
+        id: data.id,
+        name: data.name,
+        image: data.sprites.front_default,
+      };
 
-    res.render('home', {title: newData.name, imagen: newData.image, id: newData.id})
-  });
-}
+      res.render("home", {
+        title: newData.name,
+        imagen: newData.image,
+        id: newData.id,
+      });
+    });
+};
 
 // module ES6
 export default {
