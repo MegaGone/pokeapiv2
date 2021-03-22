@@ -12,8 +12,9 @@ const getPokemons = async (req, res) => {
     x = x * 500; // Valor maximo por el que quiero que se multiplique
     x = Math.floor(x); // Redondeo inferiormente para quedarme nada mas con la parte entera.
 
-    if(x === 0){
-      x = 1
+    // If x is 0, i've issues
+    if (x <= 0) {
+      x = 1;
     }
 
     let url = `https://pokeapi.co/api/v2/pokemon/${x}`; // Fetch para cada pokemon (distinto)
@@ -21,7 +22,7 @@ const getPokemons = async (req, res) => {
   }
 
   // Por cada pokemon debo de hacer un fetch
- await Promise.all(
+  await Promise.all(
     urls.map((url) => fetch(url).then((response) => response.json()))
   ).then((pokemons) => {
     // Respuesta de todas las promesas
@@ -43,7 +44,15 @@ const getPokemons = async (req, res) => {
 
     let sendPokemons = paginate(1);
 
-    res.render("pokemons", { sendPokemons });
+    // Pagination Bootstrap
+    let pages = 10; // Cuantas paginas
+    let page = parseInt(req.query.p); // Convierto la pagina a entero
+
+    res.render("pokemons", {
+      sendPokemons,
+      page,
+      pages
+    });
 
     //res.render("pokemons", { mapData });
   });
@@ -98,13 +107,11 @@ const prueba = async (req, res) => {
     x = Math.floor(x);
 
     // If x is 0, i've issues
-    if(x <= 0){
-      x = 1
+    if (x <= 0) {
+      x = 1;
     }
 
     let url = `https://pokeapi.co/api/v2/pokemon/${x}`;
-
-    
 
     urls.push(url);
   }
@@ -134,7 +141,6 @@ const prueba = async (req, res) => {
     // New pagination
     let pages = 10; // Cuantas paginas
     let page = parseInt(req.query.p); // Convierto la pagina a entero
-
 
     res.render("try", {
       newData,
