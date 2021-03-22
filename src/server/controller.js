@@ -97,7 +97,15 @@ const prueba = async (req, res) => {
     x = x * 500;
     x = Math.floor(x);
 
+    // If x is 0, i've issues
+    if(x <= 0){
+      x = 1
+    }
+
     let url = `https://pokeapi.co/api/v2/pokemon/${x}`;
+
+    
+
     urls.push(url);
   }
 
@@ -124,17 +132,9 @@ const prueba = async (req, res) => {
     let newData = paginate(1);
 
     // New pagination
-    const pageCount = Math.ceil(mapData.length / 10); // 50/10 = 5 por pagina
     let pages = 10; // Cuantas paginas
     let page = parseInt(req.query.p); // Convierto la pagina a entero
 
-    if (!page) {
-      page = 1;
-    }
-
-    if (page > pageCount) {
-      page = pageCount;
-    }
 
     res.render("try", {
       newData,
