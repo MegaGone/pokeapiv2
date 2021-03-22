@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokeapi</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container p-2 mt-4">
+        <div class="row">
+            <div class="col">
+                <h1 class="text-center mt-3">Pokemons</h1>
+                <hr>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <a href="http://localhost:2021/api">
+                        <button class="btn btn-outline-danger">Back</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pokemons list -->
+        <div class="row mt-3">
+            <% newData.forEach(function(pokemon) { %>
+                <div class="col-6 text-center mt-3  justify-content-center align-items-center">
+                    <div class="card border-dark">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img src="<%= pokemon.image %>" width="140" alt="50">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h1 class="card-title text-capitalize">
+                                        <%= pokemon.name %>
+                                    </h1>
+                                    <h5>
+                                        ID: <%= pokemon.id %>
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% }); %>
+        </div>
+
+        <div class="row">
+            <div class="col mt-5">
+                <div class="container text-center h-100 d-flex justify-content-center align-items-center">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination pagination-sm">
+
+                            <!-- Inicio if -->
+                            <li <% if(page <= 1 ) { %>
+                                    class="page-item disabled"
+                                <% } %> 
+                                ><a class="page-link" href="? page = <%= page <= 0 ? 0 : page - 1 %>">&laquo;</a>
+                            </li>
+                            <!-- Fin if -->
+
+                            <!-- Inicio For / Se le cambio el i = 0 & < 10 por i = 1 & <= pages -->
+                            <% for(var i = 0; i < pages; i++) { %>
+                                <li <% if(page == i) { %> 
+                                    class="page-item"
+                                    <% } %>
+                                ><a class="page-link" href="? page= <%= i %>"><%= i + 1 %></a></li>
+                            <% } %>
+                                
+                            <li <% if(page > pages - 1) { %>
+                                    class="page-item disabled"
+                                <% } %>
+                                ><a class="page-link" href="?page = <%= page > pages - 1 ? parseInt(pages) : 1 + parseInt(page) %>">&raquo;</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

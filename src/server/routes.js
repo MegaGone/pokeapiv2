@@ -3,6 +3,9 @@ import pokemonServices from "./controller"
 
 const router = express.Router();
 
+// Prueba
+router.get('/try', pokemonServices.prueba)
+
 // Pagina de inicio
 
 router.get("/", pokemonServices.homePage)
