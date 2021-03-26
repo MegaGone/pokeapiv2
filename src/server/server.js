@@ -6,7 +6,7 @@ import bodyParser from 'body-parser';
 const app = express();
 const port = 2021;
 
-// Middleware
+// Aca declaro la carpeta donde van a estar los archivos publicos
 app.use(express.static('dist'));
 
 // Routes

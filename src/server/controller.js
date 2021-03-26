@@ -6,12 +6,20 @@ import fetch from "node-fetch";
   let urls = [];
 
   // Para que se ejecute 5 veces
-  for (let i = 0; i <= 5; i++) {
+  for (let i = 0; i <= 50; i++) {
     // Obtener numeros aletorios para el fetch
 
     let x = Math.random(); // Obtengo numero alazar entre 0 y 1
-    x = x * 150; // Valor maximo por el que quiero que se multiplique
+    x = x * 500; // Valor maximo por el que quiero que se multiplique
     x = Math.floor(x); // Redondeo inferiormente para quedarme nada mas con la parte entera.
+
+
+    // Validacion si x es 0
+
+    if(x <= 0){
+      x = 1;
+    }
+
 
     let url = `https://pokeapi.co/api/v2/pokemon/${x}`; // Fetch para cada pokemon (distinto)
     urls.push(url); // Agrego al array
@@ -50,21 +58,51 @@ const getPokemon = (req, res) => {
       let newData = {
         id: data.id,
         name: data.name,
-        image: data.sprites.front_default,
+        image: data.sprites.front_default
       };
 
       res.json({data: newData});
     });
 }
 
-// node module
-//module.exports = getPokemons;
+
+const pokemonRamdom = (req, res) => {
+
+  let x = Math.random();
+  x = x * 500;
+  x = Math.floor(x);
+
+  if(x <= 0){
+    x = 1;
+  }
+
+  fetch(`https://pokeapi.co/api/v2/pokemon/${x}`)
+    .then(rawData => rawData.json())
+    .then(data => {
+
+      let newData = {
+
+        id: data.id,
+        name: data.name,
+        image: data.sprites.front_default
+      }
+
+
+      res.json({data: newData})
+    })
+
+}
+
+const prueba = (req, res) => {
+
+  res.json({data: 'Esta es una prueba'})
+
+}
 
 // module ES6
 export default {
   getPokemons,
-  getPokemon
+  getPokemon,
+  pokemonRamdom,
+  prueba
 };
-/*
-retornar 50 pokemones
-*/
