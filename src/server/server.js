@@ -1,31 +1,23 @@
 import express from "express";
 import routes from "./routes";
+import cors from "cors";
 import path from 'path';
-import bodyParser from 'body-parser';
 
 const app = express();
 const port = 2021;
 
-// Aca declaro la carpeta donde van a estar los archivos publicos
-app.use(express.static('dist'));
+// PUBLIC
+app.use(express.static(path.resolve(__dirname, "../../public")))
+
+app.use(cors());
 
 // Routes
 app.use(routes);
 
 // Bodyparser
-app.use(bodyParser.json());
+app.use(express.json());
 
 // CORS
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method"
-  );
-  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
-  res.header("Allow", "GET, POST, OPTIONS, PUT, DELETE");
-  next();
-});
 
 // Server
 app.listen(port, () => {
