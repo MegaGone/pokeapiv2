@@ -67,6 +67,10 @@ if (window.location.href.indexOf("pokemons") > -1) {
 
   // NEW
 
+  // Para que no aparezca
+  let prev = document.getElementById("bprev");
+  prev.style.display = 'none'
+
   fetch("http://localhost:2021/api/pokemons")
     .then((raw) => raw.json())
     .then((res) => {
@@ -87,36 +91,48 @@ if (window.location.href.indexOf("pokemons") > -1) {
         return array.slice(from, limit);
       }
 
-      function show(totalPokemons) {
-        var pagination = paginate(pokemons, perPage, page);
-        console.log(`nextPage ${page + 1}`, pagination);
-
-        pagination.forEach((page) => {
-          console.log(page);
-        });
-      }
-      show(pokemons);
-
       // PreviousPage
-      let buttonNext = document.getElementById("bnext");
+      const buttonNext = document.getElementById("bnext");
 
-      if (buttonNext < 1) {
-        buttonNext.style.display = "none";
-      } else {
-        buttonNext.addEventListener("click", () => {
-          page++;
-          // console.log(page);
-          show(pagination);
-        });
-      }
+      buttonNext.addEventListener("click", () => {
+        page++;
+        // console.log(page);
+        show(pagination);
+      });
 
       // NextPage
-      let buttonPrev = document.getElementById("bprev");
+      const buttonPrev = document.getElementById("bprev");
       buttonPrev.addEventListener("click", () => {
         page--;
         // console.log(page);
         show(pagination);
       });
+
+      function show(totalPokemons) {
+        var pagination = paginate(pokemons, perPage, page);
+        console.warn(`Page ${page}`);
+        // console.log(`nextPage ${page + 1}`, pagination);
+
+        pagination.forEach((page) => {
+          console.log(page);
+        });
+
+        // previous button
+        if (page < 2) {
+          buttonPrev.style.display = "none";
+        } else {
+          buttonPrev.style.display = "block";
+        }
+
+        // In the page 10, next button display none
+        if (page < pageCount) {
+          buttonNext.style.display = "block";
+        }else{
+          buttonNext.style.display = 'none'
+        }
+
+      }
+      show(pokemons);
 
       // console.log(pageCount);
     });
