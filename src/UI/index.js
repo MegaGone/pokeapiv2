@@ -25,51 +25,13 @@ if (window.location.href.indexOf("home") > -1) {
 }
 
 if (window.location.href.indexOf("pokemons") > -1) {
-  // OLD
-  /*
-
-  fetch("http://localhost:2021/api/pokemons")
-    .then((raw) => raw.json())
-    .then((res) => {
-      // console.log(res.data)
-
-      const pokemons = res.data;
-      console.log(pokemons);
-
-      const porPagina = 5;
-
-      let paginas = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-      function paginate(page) {
-        console.warn(`Pagina ${page}`);
-
-        // tengo que enviarle 5 desde 1 al 5, 6 al 7...
-        let limite = page * porPagina; // Hasta que indice quiero que llegue. Ejemplo 1 * 5 = 5, 2 * 5 = 10, 5 en 5;
-        let from = porPagina * (page - 1); // 5 * (2 - 1) = 5
-
-        let arr = console.log(pokemons.slice(from, limite)); // slice para que tenga un inicio y un fin
-
-        return arr;
-      }
-
-      // let limite = pagina * porPagina;
-      // let desde = porPagina * (pagina - 1);
-
-      paginas.forEach((pagina) => {
-        paginate(pagina);
-      });
-
-      // console.log(paginas);
-      // console.log({total});
-      // console.log({porPagina});
-    });
-    */
-
-  // NEW
-
   // Para que no aparezca
   let prev = document.getElementById("bprev");
-  prev.style.display = 'none'
+  prev.style.display = "none";
+
+  // Para que se inicialize en la pagina 1
+  const pageHeader = document.getElementById("pageid");
+  // pageHeader.innerHTML = "Page 1";
 
   fetch("http://localhost:2021/api/pokemons")
     .then((raw) => raw.json())
@@ -79,6 +41,9 @@ if (window.location.href.indexOf("pokemons") > -1) {
       var page = 1; // Inicializo las paginas
       const perPage = 5; // Cuantos quiero por pagina
       const pokemons = res.data; // Obtengo la data
+
+      // Inicializo el UI
+      var UI = "";
 
       var pagination;
       var pageCount = Math.ceil(pokemons.length / perPage); // Obtengo las paginas (10)
@@ -113,9 +78,51 @@ if (window.location.href.indexOf("pokemons") > -1) {
         console.warn(`Page ${page}`);
         // console.log(`nextPage ${page + 1}`, pagination);
 
-        pagination.forEach((page) => {
-          console.log(page);
+        pageHeader.innerHTML = `Page ${page}`;
+
+        // Aca tengo que almacenar en un array lo que me traiga la pagina
+
+        UI = '<div class="row mt-3">'; // Inicializo y no += porque si no sobrescribo
+
+        pagination.forEach((pokemon) => {
+          UI += 
+          `
+
+          <div class="col-6 text-center">
+
+            <div class="card mb-3">
+             
+              <div class="row g-0">
+
+                <div class="col-md-4">
+                  <img src="${pokemon.image}" alt="${pokemon.name}" width="150" height="150">
+                </div>
+
+                <div class="col-md-8">
+
+                  <div class="card-body">
+
+                    <h3 class="card-title text-capitalize">${pokemon.name}</h3>
+
+                    <p class="card-text">
+                      <h5 class="text-capitalize">${pokemon.ability}</h5>
+                      <h6 class="text-capitalize">${pokemon.type}</h6>
+                    </p>
+
+                    <p class="card-text"><small class="text-muted">${pokemon.id}</small></p>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+          `
         });
+
+        UI += "</div>";
 
         // previous button
         if (page < 2) {
@@ -127,10 +134,14 @@ if (window.location.href.indexOf("pokemons") > -1) {
         // In the page 10, next button display none
         if (page < pageCount) {
           buttonNext.style.display = "block";
-        }else{
-          buttonNext.style.display = 'none'
+        } else {
+          buttonNext.style.display = "none";
         }
 
+        // Para pintarlo en el UI
+        let content = document.getElementById("pokemonsContainer");
+        content.innerHTML = ""; // Borro para no sobreescribir
+        content.innerHTML = UI; // Aca le pongo la nueva data a pintar
       }
       show(pokemons);
 

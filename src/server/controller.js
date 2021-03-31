@@ -37,37 +37,9 @@ const getPokemons = async (req, res) => {
         name: pokemon.name,
         image: pokemon.sprites.front_default,
         type: pokemon.types[0].type.name,
-        abilty: pokemon.abilities[0].ability.name,
+        ability: pokemon.abilities[0].ability.name,
       });
     });
-
-    // // Pagination
-    // const totalPokemons = mapData.length;
-    // const perpage = 5;
-    // const pageCount = totalPokemons / 5;
-
-    // let page = parseInt(req.query.p); // Obtengo la pagina y la vuelvo un entero
-
-    // if (page < 1) {
-    //   page = 1;
-    // }
-
-    // if (page > pageCount) {
-    //   page = pageCount;
-    // }
-
-    // const from = totalPokemons - (page - 1) * perpage - 1;
-    // let to = totalPokemons - (page - perpage);
-
-    // if (to < 0) {
-    //   to = 0;
-    // }
-
-    // res.json({
-    //   pokemons: mapData.slice(from, to).reverse(),
-    //   page: page,
-    //   perPage: pageCount,
-    // });
 
     res.json({ data: mapData });
   });
